@@ -26,15 +26,15 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 # for the backend
-Restore the required .NET dependencies:
+##Restore the required .NET dependencies:
 -open cmd
-  -cd product-management-system/backend
-  -dotnet restore
+-cd product-management-system/backend
+-dotnet restore
 
--update the appsettings.json or the environment variables with your database connection string.
+###-update the appsettings.json or the environment variables with your database connection string.
 
--open cmd
-  -dotnet run
+###-open cmd
+###-dotnet run
 
 
 
