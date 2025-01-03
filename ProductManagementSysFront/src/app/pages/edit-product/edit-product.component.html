@@ -1,0 +1,71 @@
+<p-toast />
+<div class="p-4">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold mb-6">Edit Product</h2>
+        
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-6">
+            <div class="field">
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input 
+                    pInputText 
+                    id="name" 
+                    formControlName="name"
+                    class="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty': productForm.get('name')?.invalid && productForm.get('name')?.touched}"
+                />
+                <small class="text-red-500" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+                    <span *ngIf="productForm.get('name')?.errors?.['required']">Name is required</span>
+                    <span *ngIf="productForm.get('name')?.errors?.['maxlength']">Name cannot exceed 100 characters</span>
+                </small>
+            </div>
+
+            <div class="field">
+                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea 
+                    pTextarea 
+                    id="description" 
+                    formControlName="description"
+                    [rows]="5" 
+                    class="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty': productForm.get('description')?.invalid && productForm.get('description')?.touched}"
+                ></textarea>
+                <small class="text-red-500" *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched">
+                    <span *ngIf="productForm.get('description')?.errors?.['required']">Description is required</span>
+                    <span *ngIf="productForm.get('description')?.errors?.['maxlength']">Description cannot exceed 500 characters</span>
+                </small>
+            </div>
+
+            <div class="field">
+                <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price</label>
+                <p-inputNumber 
+                    id="price" 
+                    formControlName="price"
+                    [showButtons]="false"
+                    mode="decimal"
+                    [minFractionDigits]="2"
+                    [maxFractionDigits]="2"
+                    class="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty': productForm.get('price')?.invalid && productForm.get('price')?.touched}"
+                ></p-inputNumber>
+                <small class="text-red-500" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+                    <span *ngIf="productForm.get('price')?.errors?.['required']">Price is required</span>
+                    <span *ngIf="productForm.get('price')?.errors?.['min']">Price must be a positive number</span>
+                </small>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <p-button 
+                    label="Cancel" 
+                    severity="secondary" 
+                    type="button"
+                    (onClick)="router.navigate(['/'])"
+                ></p-button>
+                <p-button 
+                    label="Update" 
+                    type="submit"
+                    [disabled]="productForm.invalid"
+                ></p-button>
+            </div>
+        </form>
+    </div>
+</div>

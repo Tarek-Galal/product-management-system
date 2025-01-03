@@ -1,0 +1,97 @@
+<div class="p-4">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
+        <div class="flex-1">
+            <p-iconField iconPosition="left" class="mr-4">
+                <p-inputIcon>
+                  <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="onSearch($event)"
+                  placeholder="Search"
+                  class="w-full md:w-auto"
+                />
+              </p-iconField>
+        </div>
+        <div class="flex-1 flex items-center gap-4">
+            <span class="text-sm font-medium text-gray-700">Price Range:</span>
+            <div class="flex items-center gap-2">
+                <span class="text-sm">${{priceRange[0]}}</span>
+                <p-slider 
+                    [(ngModel)]="priceRange" 
+                    [range]="true"
+                    [min]="0"
+                    [max]="maxPrice"
+                    (onSlideEnd)="onPriceRangeChange()"
+                    class="w-full md:w-56"
+                ></p-slider>
+                <span class="text-sm">${{priceRange[1]}}</span>
+            </div>
+        </div>
+        <div>
+            <p-button
+            class="ml-2"
+            label="Create Product"
+            icon="pi pi-user-plus"
+            (onClick)="createProduct()"
+            severity="primary"
+            />
+        </div>
+    </div>
+
+    <p-table 
+        [value]="filteredProducts" 
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [paginator]="true" 
+        [rows]="10"
+        [loading]="loading"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        sortMode="multiple"
+        styleClass="p-datatable-sm"
+        class="shadow-lg">
+        
+        <ng-template pTemplate="header">
+            <tr class="bg-gray-50">
+                <th pSortableColumn="id" class="text-sm">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="name" class="text-sm">Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="description" class="text-sm">Description <p-sortIcon field="description"></p-sortIcon></th>
+                <th pSortableColumn="price" class="text-sm">Price <p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="createdDate" class="text-sm">Created Date <p-sortIcon field="createdDate"></p-sortIcon></th>
+                <th class="text-sm">Actions</th>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-product>
+            <tr class="hover:bg-gray-50">
+                <td class="text-sm">{{product.id}}</td>
+                <td class="text-sm">{{product.name}}</td>
+                <td class="text-sm">{{product.description}}</td>
+                <td class="text-sm">${{product.price}}</td>
+                <td class="text-sm">{{product.createdDate | date:'short'}}</td>
+                <td>
+                    <p-button 
+                        icon="pi pi-pencil" 
+                        (onClick)="onEdit(product.id)"
+                        severity="secondary"
+                        size="small"
+                        [rounded]="true"
+                        class="mr-2">
+                    </p-button>
+                    <p-button 
+                        icon="pi pi-trash" 
+                        (onClick)="onDelete(product.id)"
+                        severity="danger"
+                        size="small"
+                        [outlined]="true"
+                        [rounded]="true">
+                    </p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
